@@ -1,30 +1,30 @@
 // Import necessary modules
-
 import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
-import canadaMapJson from "./canadaGeoJson.json"; 
-import {mockCanadaData}  from "../../data/mockData"
+import canadaMapJson from "./canadaGeoJson.json";
+import { mapCanadaData } from "./canadaMapper"; // Import the mapper
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
+import {mockCanadaData as originalData}  from "../../data/mockData"
 
 // Load Highcharts modules
 require("highcharts/modules/exporting")(Highcharts);
 
 const CanadaMap = () => {
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
   const [mapData, setMapData] = useState(null);
+
+  // Convert backend data to Highcharts format
+  const mockCanadaData = mapCanadaData(originalData);
 
   // Set the map data on component mount
   useEffect(() => {
     setMapData(canadaMapJson);
   }, []);
 
-
-  // Highcharts options 
+  // Highcharts options
   const options = {
     chart: {
       map: mapData,
@@ -71,9 +71,6 @@ const CanadaMap = () => {
       }
     ]
   };
-  
-  
-  
 
   // Render the map component
   return (

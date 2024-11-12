@@ -26,9 +26,7 @@ const WorkModesUSA = () => {
         flexWrap="wrap"
         gap="30px"
       >
-        {/* <WorkPlace /> */}
         <WorkPlaceDynamic />
-
         <EducationDynamic />
       </Box>
     </Box>

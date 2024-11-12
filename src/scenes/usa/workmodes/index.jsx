@@ -2,8 +2,8 @@ import { Box } from "@mui/material";
 import Header from "../../../components/Header";
 import Role from "../../../components/Role";
 import State from "../../../components/Region";
-import Education from "./education";
-import WorkPlace from "./workplace";
+import EducationDynamic from "./educationDynamic";
+import WorkPlaceDynamic from "./workplaceDynamic";
 
 const WorkModesUSA = () => {
   return (
@@ -26,9 +26,8 @@ const WorkModesUSA = () => {
         flexWrap="wrap"
         gap="30px"
       >
-        <WorkPlace />
-
-        <Education />
+        <WorkPlaceDynamic />
+        <EducationDynamic />
       </Box>
     </Box>
   );
