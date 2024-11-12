@@ -37,12 +37,12 @@ const MapUSAChart = () => {
     colorAxis: {
       min: 0,
       stops: [
-        [0, '#DEEBAE'],
-        [0.2, '#A4D6AD'],
-        [0.4, '#37AFAB'],
-        [0.6, '#547C84'],
-        [0.8, '#CEBF93'],
-        [1, '#a69d70']
+        [0, '#f1eef6'],    // Light color for the lowest values
+        [0.2, '#bdc9e1'],
+        [0.4, '#74a9cf'],
+        [0.6, '#2b8cbe'],
+        [0.8, '#045a8d'],  // Dark color for higher values
+        [1, '#023858']     // Darkest color for the highest values
       ],
       labels: {
         style: {
