@@ -3,7 +3,6 @@ import BarChartDynamic from "../../../components/BarChartDynamic";
 import Header from "../../../components/Header";
 
 const ToolsDynamic = ({ data }) => {
-  // const cachedData = useSessionCache("toolsData", data);
 
   return (
     <Box height="50vh" flex="1" minWidth="48%">

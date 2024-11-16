@@ -6,7 +6,7 @@ import LanguagesDynamic from "./languagesDynamic";
 import LibrariesDynamic from "./librariesDynamic";
 import ToolsDynamic from "./toolsDynamic";
 import SkillsDynamic from "./skillsDynamic";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { fetchTechTrends } from "../../../api/dataService";
 
 const TechStackCanada = () => {
@@ -42,22 +42,22 @@ const TechStackCanada = () => {
             const transformData = (items, key) => {
               switch (key) {
                 case "languages":
-                  return items.map(item => ({
+                  return items.map((item) => ({
                     languages: item.language,
                     percentage: item.percentage,
                   }));
                 case "libraries":
-                  return items.map(item => ({
+                  return items.map((item) => ({
                     libraries: item.library,
                     percentage: item.percentage,
                   }));
                 case "tools":
-                  return items.map(item => ({
+                  return items.map((item) => ({
                     tools: item.tool,
                     percentage: item.percentage,
                   }));
                 case "skills":
-                  return items.map(item => ({
+                  return items.map((item) => ({
                     skills: item.skill,
                     percentage: item.percentage,
                   }));
@@ -108,10 +108,18 @@ const TechStackCanada = () => {
         justifyContent="space-between"
         gap="10px"
       >
-        <LibrariesDynamic data={techStackData.libraries} />
-        <LanguagesDynamic data={techStackData.languages} />
-        <ToolsDynamic data={techStackData.tools} />
-        <SkillsDynamic data={techStackData.skills} />
+        {techStackData.languages && techStackData.languages.length > 0 && (
+          <LibrariesDynamic data={techStackData.libraries} />
+        )}
+        {techStackData.tools && techStackData.tools.length > 0 && (
+          <ToolsDynamic data={techStackData.tools} />
+        )}
+        {techStackData.libraries && techStackData.libraries.length > 0 && (
+          <LanguagesDynamic data={techStackData.languages} />
+        )}
+        {techStackData.skills && techStackData.skills.length > 0 && (
+          <SkillsDynamic data={techStackData.skills} />
+        )}
       </Box>
     </Box>
   );

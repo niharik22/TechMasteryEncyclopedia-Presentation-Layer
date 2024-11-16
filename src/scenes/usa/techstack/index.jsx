@@ -86,55 +86,36 @@ const TechStackUSA = () => {
   }, [role, state]);
 
   return (
-    <Box
-      m="10px"
-      width="100%"
-      maxWidth="100%"
-      paddingLeft={{ xs: "5px", md: "10px" }}
-      paddingRight={{ xs: "5px", md: "10px" }}
-      transition="padding-left 0.3s, padding-right 0.3s"
-    >
-      {/* Header Section */}
+    <Box m="20px" width="98%">
       <Box
         display="flex"
         alignItems="center"
         justifyContent="space-between"
-        mb="10px"
+        mb="20px"
       >
         <Header title="Tech Stack in Demand" />
-        <Box display="flex" gap="10px">
+        <Box display="flex" gap="20px">
           <Role onRoleChange={setRole} />
           <State onStateChange={setState} />
         </Box>
       </Box>
-
-      {/* Data Visualization Section */}
       <Box
         display="flex"
-        flexDirection="column"
-        gap="10px" // Reduced gap for a more compact layout
-        overflowY="auto"
-        padding="5px"
+        flexWrap="wrap"
+        justifyContent="space-between"
+        gap="10px"
       >
         {techStackData.languages && techStackData.languages.length > 0 && (
-          <Box flex="1" minHeight="250px" height="auto">
-            <LanguagesDynamic data={techStackData.languages} />
-          </Box>
+          <LanguagesDynamic data={techStackData.languages} />
         )}
         {techStackData.tools && techStackData.tools.length > 0 && (
-          <Box flex="1" minHeight="250px" height="auto">
-            <ToolsDynamic data={techStackData.tools} />
-          </Box>
+          <ToolsDynamic data={techStackData.tools} />
         )}
         {techStackData.libraries && techStackData.libraries.length > 0 && (
-          <Box flex="1" minHeight="250px" height="auto">
-            <LibrariesDynamic data={techStackData.libraries} />
-          </Box>
+          <LibrariesDynamic data={techStackData.libraries} />
         )}
         {techStackData.skills && techStackData.skills.length > 0 && (
-          <Box flex="1" minHeight="250px" height="auto">
-            <SkillsDynamic data={techStackData.skills} />
-          </Box>
+          <SkillsDynamic data={techStackData.skills} />
         )}
       </Box>
     </Box>
