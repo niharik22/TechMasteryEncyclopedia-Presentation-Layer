@@ -1,15 +1,18 @@
-import * as React from 'react';
+import React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function Role() {
-  // Set initial state to 10 to select "Software Engineer" by default
-  const [role, setRole] = React.useState(10);
+// Prop `onRoleChange` to allow the parent component to pass a callback function
+export default function Role({ onRoleChange }) {
+  // Set initial state to 'Software Engineer' to select by default
+  const [role, setRole] = React.useState("Software Engineer");
 
   const handleChange = (event) => {
     setRole(event.target.value);
+    // Call the callback function passed by the parent component
+    onRoleChange(event.target.value);
   };
 
   return (
@@ -22,9 +25,9 @@ export default function Role() {
         label="Role"
         onChange={handleChange}
       >
-        <MenuItem value={10}>Software Engineer</MenuItem>
-        <MenuItem value={20}>Data Analyst</MenuItem>
-        <MenuItem value={30}>Data Scientist</MenuItem>
+        <MenuItem value="Software Engineer">Software Engineer</MenuItem>
+        <MenuItem value="Data Analyst">Data Analyst</MenuItem>
+        <MenuItem value="Data Engineer">Data Engineer</MenuItem>
       </Select>
     </FormControl>
   );

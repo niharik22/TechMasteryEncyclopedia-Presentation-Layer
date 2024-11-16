@@ -6,7 +6,7 @@ import canadaMapJson from "./canadaGeoJson.json";
 import { mapCanadaData } from "./canadaMapper"; // Import the mapper
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import {mockCanadaData as originalData}  from "../../data/mockData"
+import { fetchCountryDetails } from "../../api/dataService"; // Import your API fetch function
 
 // Load Highcharts modules
 require("highcharts/modules/exporting")(Highcharts);
@@ -15,9 +15,34 @@ const CanadaMap = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [mapData, setMapData] = useState(null);
+  const [apiData, setApiData] = useState([]);
 
-  // Convert backend data to Highcharts format
-  const mockCanadaData = mapCanadaData(originalData);
+  // Function to transform API data into the desired format
+  const transformData = (data) => {
+    return data.states.map((item) => ({
+      State: item.state,
+      percentage: item.percentage,
+    }));
+  };
+
+  // Fetch data from the API and set the transformed data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Make the API request with the required parameter
+        const response = await fetchCountryDetails({ country: "Canada" });
+        const transformedData = transformData(response); // Transform the API data
+        setApiData(transformedData);
+      } catch (error) {
+        console.error("Failed to fetch data from the API:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Convert transformed data to Highcharts format
+  const mockCanadaData = mapCanadaData(apiData);
 
   // Set the map data on component mount
   useEffect(() => {
@@ -28,32 +53,35 @@ const CanadaMap = () => {
   const options = {
     chart: {
       map: mapData,
-      backgroundColor: colors.primary[400] // Light beige background color
+      backgroundColor: colors.primary[400], // Light beige background color
     },
     title: {
-      text: ""
+      text: "",
     },
     mapNavigation: {
       enabled: true,
       buttonOptions: {
-        verticalAlign: "top"
-      }
+        verticalAlign: "top",
+      },
     },
     colorAxis: {
-      min: 0,
+      min: 0, // Start at 0
       stops: [
-        [0, '#f1eef6'],    // Light color for the lowest values
-        [0.2, '#bdc9e1'],
-        [0.4, '#74a9cf'],
-        [0.6, '#2b8cbe'],
-        [0.8, '#045a8d'],  // Dark color for higher values
-        [1, '#023858']     // Darkest color for the highest values
+        [0, "#2b83ba"], // Deep blue for the lowest values (0%)
+        [0.05, "#4c9fd9"], // Blue for very low values (0.5%)
+        [0.1, "#80bff2"], // Light blue (1%)
+        [0.2, "#a6d96a"], // Green for low values (2%)
+        [0.3, "#d9ef8b"], // Yellow-green (3%)
+        [0.4, "#f7e482"], // Bright yellow (5%)
+        [0.6, "#fdae61"], // Orange (10%)
+        [0.8, "#f46d43"], // Dark orange (20%)
+        [1, "#d73027"], // Deep red for the highest values (55%)
       ],
       labels: {
         style: {
-          color: colors.grey[200]
-        }
-      }
+          color: "#444444", // Neutral text color for visibility on both light and dark backgrounds
+        },
+      },
     },
     series: [
       {
@@ -61,15 +89,15 @@ const CanadaMap = () => {
         name: "Jobs",
         states: {
           hover: {
-            color: "#BADA55"
-          }
+            color: "#BADA55",
+          },
         },
         dataLabels: {
           enabled: false,
-          format: "{point.name}"
-        }
-      }
-    ]
+          format: "{point.name}",
+        },
+      },
+    ],
   };
 
   // Render the map component

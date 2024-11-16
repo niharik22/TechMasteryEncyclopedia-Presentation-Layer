@@ -1,29 +1,52 @@
 // Import necessary libraries
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts/highmaps';
 import HighchartsReact from 'highcharts-react-official';
 import mapDataUSA from '@highcharts/map-collection/countries/us/us-all.geo.json';
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import { getStateKey } from './stateKeyMapping'; // Import the helper
-import {mockUSAData}  from "../../data/mockData"
+import { fetchCountryDetails } from "../../api/dataService"; // Import the API function
+import { getStateKey } from './stateKeyMapping'; // Import the helper function
 
-
-// Transform the provided data into a format compatible with Highcharts
-const data = mockUSAData.map(item => [
-  getStateKey(item.State), // Use the helper function to get the key
-  item.percentage
-]);
+// Load Highcharts modules
+require("highcharts/modules/exporting")(Highcharts);
 
 const MapUSAChart = () => {
+  const [data, setData] = useState([]); // State to hold the map data
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  // Fetch data from the API when the component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchCountryDetails({ country: "United States" });
+
+        // Transform the data into the required format for Highcharts
+        if (response && response.states) {
+          // Map the API response to the expected data structure
+          const transformedData = response.states.map(item => {
+            return [
+              getStateKey(item.state), // Use the helper function to get the state key
+              item.percentage
+            ];
+          });
+
+          setData(transformedData);
+        }
+      } catch (error) {
+        console.error("Failed to fetch country details:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // Highcharts configuration
   const options = {
     chart: {
       map: mapDataUSA,
-      backgroundColor: colors.primary[400]
+      backgroundColor: colors.primary[400],
     },
     title: {
       text: '',
@@ -35,21 +58,27 @@ const MapUSAChart = () => {
       },
     },
     colorAxis: {
-      min: 0,
+      min: 0, 
       stops: [
-        [0, '#f1eef6'],    // Light color for the lowest values
-        [0.2, '#bdc9e1'],
-        [0.4, '#74a9cf'],
-        [0.6, '#2b8cbe'],
-        [0.8, '#045a8d'],  // Dark color for higher values
-        [1, '#023858']     // Darkest color for the highest values
+        [0, '#2b83ba'],  // Deep blue for the lowest values (0%)
+        [0.05, '#4c9fd9'], // Blue (0.5%)
+        [0.1, '#80bff2'],  // Light blue (1%)
+        [0.15, '#a6d96a'], // Light green (1.5%)
+        [0.2, '#d9ef8b'],  // Yellow-green (2%)
+        [0.3, '#f7e482'],  // Bright yellow (3%)
+        [0.4, '#fdbb58'],  // Yellow-orange (4%)
+        [0.5, '#fdae61'],  // Orange (5%)
+        [0.7, '#f46d43'],  // Dark orange (7%)
+        [1, '#d73027']     // Deep red for the highest values (20%)
       ],
       labels: {
         style: {
-          color: colors.grey[200]
-        }
-      }
+          color: '#ffffff', // White text color for visibility on dark backgrounds
+        },
+      },
     },
+        
+          
     series: [
       {
         data: data,

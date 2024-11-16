@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { ResponsivePie } from "@nivo/pie";
 import { tokens } from "../theme";

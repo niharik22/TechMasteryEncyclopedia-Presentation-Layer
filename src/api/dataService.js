@@ -1,32 +1,10 @@
 import apiClient from "./apiClient";
 import endpoints from "./endpoints";
 
-// Fetch languages data
-export const fetchLanguages = async () => {
+// Fetch operation data by sending a JSON payload
+export const fetchTechTrends = async (requestData) => {
   try {
-    const response = await apiClient.get(endpoints.getLanguages);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching languages:", error);
-    throw error;
-  }
-};
-
-// Fetch work modes data
-export const fetchWorkModes = async () => {
-  try {
-    const response = await apiClient.get(endpoints.getWorkModes);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching work modes:", error);
-    throw error;
-  }
-};
-
-// Fetch tech trends data
-export const fetchTechTrends = async () => {
-  try {
-    const response = await apiClient.get(endpoints.getTechTrends);
+    const response = await apiClient.post(endpoints.getTechTrends, requestData);
     return response.data;
   } catch (error) {
     console.error("Error fetching tech trends:", error);
@@ -34,4 +12,35 @@ export const fetchTechTrends = async () => {
   }
 };
 
-// Add more service functions as needed
+// Fetch work modes data by sending a JSON payload
+export const fetchWorkModes = async (requestData) => {
+  try {
+    const response = await apiClient.post(endpoints.getWorkModes, requestData);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching work modes:", error);
+    throw error;
+  }
+};
+
+// Fetch tech education data by sending a JSON payload
+export const fetchEducation = async (requestData) => {
+  try {
+    const response = await apiClient.post(endpoints.getEducation, requestData);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching education data:", error);
+    throw error;
+  }
+};
+
+// Fetch tech trends data (country-specific details) by sending a JSON payload
+export const fetchCountryDetails = async (requestData) => {
+  try {
+    const response = await apiClient.post(endpoints.getMaps, requestData);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching country details:", error);
+    throw error;
+  }
+};
