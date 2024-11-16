@@ -19,54 +19,69 @@ const TechStackUSA = () => {
     skills: [],
   });
 
-  // Fetch and transform data when role or state changes
+  // Fetch and transform data when role or state changes, with caching logic
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetchTechTrends({
-          country: "United States",
-          role,
-          state,
-        });
+      const cacheKey = `usa-techstack-${role}-${state}`;
+      const cachedData = sessionStorage.getItem(cacheKey);
 
-        if (response) {
-          // Transform API data to the required format
-          const transformData = (items, key) => {
-            switch (key) {
-              case "languages":
-                return items.map(item => ({
-                  languages: item.language,
-                  percentage: item.percentage,
-                }));
-              case "libraries":
-                return items.map(item => ({
-                  libraries: item.library,
-                  percentage: item.percentage,
-                }));
-              case "tools":
-                return items.map(item => ({
-                  tools: item.tool,
-                  percentage: item.percentage,
-                }));
-              case "skills":
-                return items.map(item => ({
-                  skills: item.skill,
-                  percentage: item.percentage,
-                }));
-              default:
-                return [];
-            }
-          };
-
-          setTechStackData({
-            languages: transformData(response.languages, "languages"),
-            libraries: transformData(response.libraries, "libraries"),
-            tools: transformData(response.tools, "tools"),
-            skills: transformData(response.skills, "skills"),
+      if (cachedData) {
+        // Use cached data if available and valid
+        setTechStackData(JSON.parse(cachedData));
+      } else {
+        try {
+          // Fetch the data from the API if not cached
+          const response = await fetchTechTrends({
+            country: "United States",
+            role,
+            state,
           });
+
+          if (response) {
+            // Transform API data to the required format
+            const transformData = (items, key) => {
+              switch (key) {
+                case "languages":
+                  return items.map(item => ({
+                    languages: item.language,
+                    percentage: item.percentage,
+                  }));
+                case "libraries":
+                  return items.map(item => ({
+                    libraries: item.library,
+                    percentage: item.percentage,
+                  }));
+                case "tools":
+                  return items.map(item => ({
+                    tools: item.tool,
+                    percentage: item.percentage,
+                  }));
+                case "skills":
+                  return items.map(item => ({
+                    skills: item.skill,
+                    percentage: item.percentage,
+                  }));
+                default:
+                  return [];
+              }
+            };
+
+            const transformedData = {
+              languages: transformData(response.languages, "languages"),
+              libraries: transformData(response.libraries, "libraries"),
+              tools: transformData(response.tools, "tools"),
+              skills: transformData(response.skills, "skills"),
+            };
+
+            // Set the transformed data
+            setTechStackData(transformedData);
+
+            // Cache the data in sessionStorage
+            sessionStorage.setItem(cacheKey, JSON.stringify(transformedData));
+          }
+        } catch (error) {
+          console.error("Failed to fetch tech stack data:", error);
         }
-      } catch (error) {
-        console.error("Failed to fetch tech stack data:", error);
       }
     };
 

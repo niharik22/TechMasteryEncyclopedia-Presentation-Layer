@@ -8,27 +8,41 @@ const WorkPlace = ({ selectedRole, selectedState }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        // Fetch the work modes data
-        const fetchedData = await fetchWorkModes({
-          country: "Canada",
-          role: selectedRole,
-          state: selectedState,
-        });
+      // Create a unique cache key using role and state
+      const cacheKey = `canada-workplace-${selectedRole}-${selectedState}`;
+      const cachedData = sessionStorage.getItem(cacheKey);
 
-        // Transform the data into the required format for PieChartDynamic
-        if (fetchedData && fetchedData.workplace) {
-          const transformedData = fetchedData.workplace.map((item) => ({
-            id: item.id,
-            label: item.label,
-            value: item.value,
-          }));
-          setData(transformedData);
-        } else {
-          setData([]); // Set an empty array if no data is available
+      if (cachedData) {
+        // Use cached data if available
+        setData(JSON.parse(cachedData));
+      } else {
+        // Fetch data from the API if not cached
+        try {
+          const fetchedData = await fetchWorkModes({
+            country: "Canada",
+            role: selectedRole,
+            state: selectedState,
+          });
+
+          // Transform and cache the data
+          if (fetchedData && fetchedData.workplace) {
+            const transformedData = fetchedData.workplace.map((item) => ({
+              id: item.id,
+              label: item.label,
+              value: item.value,
+            }));
+
+            // Set the transformed data
+            setData(transformedData);
+
+            // Cache the data in sessionStorage
+            sessionStorage.setItem(cacheKey, JSON.stringify(transformedData));
+          } else {
+            setData([]); // Set an empty array if no data is available
+          }
+        } catch (error) {
+          console.error("Failed to fetch workplace data:", error);
         }
-      } catch (error) {
-        console.error("Failed to fetch workplace data:", error);
       }
     };
 
@@ -38,7 +52,7 @@ const WorkPlace = ({ selectedRole, selectedState }) => {
   return (
     <Box height="50vh" flex="1" minWidth="48%">
       <PieChartDynamic
-        data={data}  // Using the transformed data
+        data={data} // Using the transformed data
         title="Work Modes Distribution"
       />
     </Box>

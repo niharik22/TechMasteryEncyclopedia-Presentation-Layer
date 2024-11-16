@@ -25,16 +25,27 @@ const CanadaMap = () => {
     }));
   };
 
-  // Fetch data from the API and set the transformed data
+  // Fetch data from the API and set the transformed data with caching
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        // Make the API request with the required parameter
-        const response = await fetchCountryDetails({ country: "Canada" });
-        const transformedData = transformData(response); // Transform the API data
-        setApiData(transformedData);
-      } catch (error) {
-        console.error("Failed to fetch data from the API:", error);
+      const cacheKey = "canadaMapData";
+      const cachedData = sessionStorage.getItem(cacheKey);
+
+      if (cachedData) {
+        // Use cached data if available
+        setApiData(JSON.parse(cachedData));
+      } else {
+        try {
+          // Make the API request with the required parameter
+          const response = await fetchCountryDetails({ country: "Canada" });
+          const transformedData = transformData(response); // Transform the API data
+
+          // Set and cache the transformed data
+          setApiData(transformedData);
+          sessionStorage.setItem(cacheKey, JSON.stringify(transformedData));
+        } catch (error) {
+          console.error("Failed to fetch data from the API:", error);
+        }
       }
     };
 
@@ -64,18 +75,21 @@ const CanadaMap = () => {
         verticalAlign: "top",
       },
     },
+    accessibility: {
+      enabled: false, // Disable accessibility to remove the warning
+    },
     colorAxis: {
       min: 0, // Start at 0
       stops: [
         [0, "#2b83ba"], // Deep blue for the lowest values (0%)
-        [0.05, "#4c9fd9"], // Blue for very low values (0.5%)
-        [0.1, "#80bff2"], // Light blue (1%)
-        [0.2, "#a6d96a"], // Green for low values (2%)
-        [0.3, "#d9ef8b"], // Yellow-green (3%)
-        [0.4, "#f7e482"], // Bright yellow (5%)
-        [0.6, "#fdae61"], // Orange (10%)
-        [0.8, "#f46d43"], // Dark orange (20%)
-        [1, "#d73027"], // Deep red for the highest values (55%)
+        [0.05, "#4c9fd9"], // Blue for very low values (5%)
+        [0.1, "#80bff2"], // Light blue (10%)
+        [0.2, "#a6d96a"], // Green for low values (20%)
+        [0.3, "#d9ef8b"], // Yellow-green (30%)
+        [0.4, "#f7e482"], // Bright yellow (40%)
+        [0.6, "#fdae61"], // Orange (60%)
+        [0.8, "#f46d43"], // Dark orange (80%)
+        [1, "#d73027"], // Deep red for the highest values (100%)
       ],
       labels: {
         style: {

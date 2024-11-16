@@ -16,26 +16,35 @@ const MapUSAChart = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  // Fetch data from the API when the component mounts
+  // Fetch data from the API with caching
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetchCountryDetails({ country: "United States" });
+      const cacheKey = "usaMapData";
+      const cachedData = sessionStorage.getItem(cacheKey);
 
-        // Transform the data into the required format for Highcharts
-        if (response && response.states) {
-          // Map the API response to the expected data structure
-          const transformedData = response.states.map(item => {
-            return [
-              getStateKey(item.state), // Use the helper function to get the state key
-              item.percentage
-            ];
-          });
+      if (cachedData) {
+        // Use cached data if available
+        setData(JSON.parse(cachedData));
+      } else {
+        try {
+          const response = await fetchCountryDetails({ country: "United States" });
 
-          setData(transformedData);
+          // Transform the data into the required format for Highcharts
+          if (response && response.states) {
+            const transformedData = response.states.map(item => {
+              return [
+                getStateKey(item.state), // Use the helper function to get the state key
+                item.percentage,
+              ];
+            });
+
+            // Set the transformed data and cache it
+            setData(transformedData);
+            sessionStorage.setItem(cacheKey, JSON.stringify(transformedData));
+          }
+        } catch (error) {
+          console.error("Failed to fetch country details:", error);
         }
-      } catch (error) {
-        console.error("Failed to fetch country details:", error);
       }
     };
 
@@ -57,8 +66,11 @@ const MapUSAChart = () => {
         verticalAlign: 'top',
       },
     },
+    accessibility: {
+      enabled: false, // Disable accessibility to remove the warning
+    },
     colorAxis: {
-      min: 0, 
+      min: 0,
       stops: [
         [0, '#2b83ba'],  // Deep blue for the lowest values (0%)
         [0.05, '#4c9fd9'], // Blue (0.5%)
@@ -69,7 +81,7 @@ const MapUSAChart = () => {
         [0.4, '#fdbb58'],  // Yellow-orange (4%)
         [0.5, '#fdae61'],  // Orange (5%)
         [0.7, '#f46d43'],  // Dark orange (7%)
-        [1, '#d73027']     // Deep red for the highest values (20%)
+        [1, '#d73027'],    // Deep red for the highest values (20%)
       ],
       labels: {
         style: {
@@ -77,8 +89,6 @@ const MapUSAChart = () => {
         },
       },
     },
-        
-          
     series: [
       {
         data: data,

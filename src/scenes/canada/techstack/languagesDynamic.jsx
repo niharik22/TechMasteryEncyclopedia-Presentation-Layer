@@ -1,10 +1,8 @@
 import { Box } from "@mui/material";
 import BarChartDynamic from "../../../components/BarChartDynamic";
-import useSessionCache from "../../../hooks/useSessionCache";
 
 
 const LanguagesDynamic = ({ data }) => {
-  // const cahedData = useSessionCache("languagesData", data);
 
   if (!data) return <p>Loading...</p>;
 

@@ -1,24 +1,24 @@
 // src/hooks/useSessionCache.js
 import { useState, useEffect } from "react";
 
-const useSessionCache = (key, fetchData) => {
-  const [data, setData] = useState(null);
+const useSessionCache = (key, data) => {
+  const [cachedData, setCachedData] = useState(null);
 
   useEffect(() => {
     // Check if data is available in sessionStorage
-    const cachedData = sessionStorage.getItem(key);
-    if (cachedData) {
-      setData(JSON.parse(cachedData));
+    const sessionData = sessionStorage.getItem(key);
+    if (sessionData) {
+      setCachedData(JSON.parse(sessionData));
     } else {
-      // Fetch data from the API if not in cache
-      fetchData().then((fetchedData) => {
-        setData(fetchedData);
-        sessionStorage.setItem(key, JSON.stringify(fetchedData)); // Save to sessionStorage
-      });
+      // If no sessionData, use provided data and cache it
+      if (data) {
+        setCachedData(data);
+        sessionStorage.setItem(key, JSON.stringify(data)); // Save to sessionStorage
+      }
     }
-  }, [key, fetchData]);
+  }, [key, data]);
 
-  return data;
+  return cachedData;
 };
 
 export default useSessionCache;
