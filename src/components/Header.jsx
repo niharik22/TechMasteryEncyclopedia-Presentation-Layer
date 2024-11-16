@@ -5,7 +5,7 @@ const Header = ({ title, subtitle }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <Box mb="30px">
+    <Box mb="10px"> {/* Reduced margin bottom from 30px to 10px */}
       <Typography
         variant="h4"
         color={colors.grey[200]}
@@ -14,7 +14,11 @@ const Header = ({ title, subtitle }) => {
       >
         {title}
       </Typography>
-      <Typography variant="h5" color={colors.greenAccent[400]}>
+      <Typography
+        variant="h5"
+        color={colors.grey[200]}
+        sx={{ textAlign: "center" }}
+      >
         {subtitle}
       </Typography>
     </Box>

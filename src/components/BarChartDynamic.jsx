@@ -9,15 +9,25 @@ const BarChartDynamic = ({ data = [], type = "item", isDashboard = false }) => {
   // Sort the data in descending order by percentage
   const sortedData = [...data].sort((a, b) => b.percentage - a.percentage);
 
-  // Custom color palette inspired by your desired tones
+  // Determine the maximum percentage value in the data
+  const maxPercentage = Math.max(...sortedData.map((item) => item.percentage));
+
+  // Generate tick values based on the maximum percentage
+  const tickInterval = Math.ceil(maxPercentage / 5);
+  const tickValues = Array.from(
+    { length: Math.ceil(maxPercentage / tickInterval) + 1 },
+    (_, index) => index * tickInterval
+  );
+
+  // Custom color palette
   const customPalette = [
     "#6baed6", // Light blue
     "#3182bd", // Medium blue
     "#08519c", // Dark blue
     "#9ecae1", // Pale blue
-    "#c6dbef", // Soft neutral blue
-    "#fdae61", // Warm beige-orange
-    "#fdbb84", // Soft orange
+    "#a1d99b", // Light green
+    "#74c476", // Medium green
+    "#31a354", // Dark green
   ];
 
   const generateCustomPalette = (count) => {
@@ -44,8 +54,8 @@ const BarChartDynamic = ({ data = [], type = "item", isDashboard = false }) => {
         labels: { text: { fontSize: 14, fontWeight: "bold", fill: colors.blueAccent[100] } },
         tooltip: {
           container: {
-            background: colors.grey[900], // Dark background for tooltip
-            color: colors.grey[100], // Light text for contrast
+            background: colors.grey[900],
+            color: colors.grey[100],
             fontSize: 14,
             borderRadius: 4,
             padding: "8px",
@@ -54,7 +64,7 @@ const BarChartDynamic = ({ data = [], type = "item", isDashboard = false }) => {
       }}
       keys={["percentage"]}
       indexBy={type}
-      margin={{ top: 40, right: 20, bottom: 70, left: 50 }} // Increased bottom margin for rotated labels
+      margin={{ top: 20, right: 20, bottom: 120, left: 50 }} // Increased bottom margin
       padding={0.3}
       valueScale={{ type: "linear" }}
       indexScale={{ type: "band", round: true }}
@@ -65,10 +75,10 @@ const BarChartDynamic = ({ data = [], type = "item", isDashboard = false }) => {
       axisBottom={{
         tickSize: 5,
         tickPadding: 5,
-        tickRotation: -45, // Rotate labels 45 degrees for better readability
-        legend: isDashboard ? undefined : type.charAt(0).toUpperCase() + type.slice(1),
+        tickRotation: -45, // Rotated labels for better fit
+        legend: isDashboard ? undefined : ``,
         legendPosition: "middle",
-        legendOffset: 50, // Adjusted legend offset for vertical space
+        legendOffset: 60,
       }}
       axisLeft={{
         tickSize: 5,
@@ -77,6 +87,7 @@ const BarChartDynamic = ({ data = [], type = "item", isDashboard = false }) => {
         legend: isDashboard ? undefined : "Percentage",
         legendPosition: "middle",
         legendOffset: -40,
+        tickValues: tickValues,
       }}
       enableGridY={false}
       enableLabel={true}

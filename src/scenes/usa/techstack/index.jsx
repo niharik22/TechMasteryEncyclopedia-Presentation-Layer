@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import Header from "../../../components/Header";
 import Role from "../../../components/Role";
@@ -6,7 +7,6 @@ import LanguagesDynamic from "./languagesDynamic";
 import LibrariesDynamic from "./librariesDynamic";
 import ToolsDynamic from "./toolsDynamic";
 import SkillsDynamic from "./skillsDynamic";
-import React, { useState, useEffect } from 'react';
 import { fetchTechTrends } from "../../../api/dataService";
 
 const TechStackUSA = () => {
@@ -38,34 +38,31 @@ const TechStackUSA = () => {
           });
 
           if (response) {
-            // Transform API data to the required format
+            // Helper function to transform API data to the required format
             const transformData = (items, key) => {
-              switch (key) {
-                case "languages":
-                  return items.map(item => ({
-                    languages: item.language,
-                    percentage: item.percentage,
-                  }));
-                case "libraries":
-                  return items.map(item => ({
-                    libraries: item.library,
-                    percentage: item.percentage,
-                  }));
-                case "tools":
-                  return items.map(item => ({
-                    tools: item.tool,
-                    percentage: item.percentage,
-                  }));
-                case "skills":
-                  return items.map(item => ({
-                    skills: item.skill,
-                    percentage: item.percentage,
-                  }));
-                default:
-                  return [];
-              }
+              return items.map((item) => {
+                switch (key) {
+                  case "languages":
+                    return {
+                      languages: item.language,
+                      percentage: item.percentage,
+                    };
+                  case "libraries":
+                    return {
+                      libraries: item.library,
+                      percentage: item.percentage,
+                    };
+                  case "tools":
+                    return { tools: item.tool, percentage: item.percentage };
+                  case "skills":
+                    return { skills: item.skill, percentage: item.percentage };
+                  default:
+                    return {};
+                }
+              });
             };
 
+            // Transform and set data
             const transformedData = {
               languages: transformData(response.languages, "languages"),
               libraries: transformData(response.libraries, "libraries"),
@@ -89,29 +86,56 @@ const TechStackUSA = () => {
   }, [role, state]);
 
   return (
-    <Box m="20px" width="98%">
+    <Box
+      m="10px"
+      width="100%"
+      maxWidth="100%"
+      paddingLeft={{ xs: "5px", md: "10px" }}
+      paddingRight={{ xs: "5px", md: "10px" }}
+      transition="padding-left 0.3s, padding-right 0.3s"
+    >
+      {/* Header Section */}
       <Box
         display="flex"
         alignItems="center"
         justifyContent="space-between"
-        mb="20px"
+        mb="10px"
       >
         <Header title="Tech Stack in Demand" />
-        <Box display="flex" gap="20px">
+        <Box display="flex" gap="10px">
           <Role onRoleChange={setRole} />
           <State onStateChange={setState} />
         </Box>
       </Box>
+
+      {/* Data Visualization Section */}
       <Box
         display="flex"
-        flexWrap="wrap"
-        justifyContent="space-between"
-        gap="10px"
+        flexDirection="column"
+        gap="10px" // Reduced gap for a more compact layout
+        overflowY="auto"
+        padding="5px"
       >
-        <LibrariesDynamic data={techStackData.libraries} />
-        <LanguagesDynamic data={techStackData.languages} />
-        <ToolsDynamic data={techStackData.tools} />
-        <SkillsDynamic data={techStackData.skills} />
+        {techStackData.languages && techStackData.languages.length > 0 && (
+          <Box flex="1" minHeight="250px" height="auto">
+            <LanguagesDynamic data={techStackData.languages} />
+          </Box>
+        )}
+        {techStackData.tools && techStackData.tools.length > 0 && (
+          <Box flex="1" minHeight="250px" height="auto">
+            <ToolsDynamic data={techStackData.tools} />
+          </Box>
+        )}
+        {techStackData.libraries && techStackData.libraries.length > 0 && (
+          <Box flex="1" minHeight="250px" height="auto">
+            <LibrariesDynamic data={techStackData.libraries} />
+          </Box>
+        )}
+        {techStackData.skills && techStackData.skills.length > 0 && (
+          <Box flex="1" minHeight="250px" height="auto">
+            <SkillsDynamic data={techStackData.skills} />
+          </Box>
+        )}
       </Box>
     </Box>
   );

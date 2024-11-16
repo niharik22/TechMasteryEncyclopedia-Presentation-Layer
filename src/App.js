@@ -14,22 +14,23 @@ import CanadaMap from "./scenes/canada/map";
 
 function App() {
   const [theme, colorMode] = useMode();
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className="app">
-          <SideTogglebar></SideTogglebar>
-          <main className="content">
-            <Topbar></Topbar>
+        <div style={{ display: "flex", height: "100vh" }}>
+          <SideTogglebar />
+          <main style={{ flex: 1, overflowY: "auto" }}>
+            <Topbar />
             <Routes>
               {/* <Route path="/" element={<Dashboard />} /> */}
               <Route path="usa/techstack" element={<TechStackUSA />} />
               <Route path="usa/workmode" element={<WorkModesUSA />} />
-              <Route path="usa/map" element={<MapUSA/>} /> 
+              <Route path="usa/map" element={<MapUSA />} />
               <Route path="canada/techstack" element={<TechStackCanada />} />
               <Route path="canada/workmode" element={<WorkModesCanada />} />
-              <Route path="canada/map" element={<CanadaMap/>} /> 
+              <Route path="canada/map" element={<CanadaMap />} />
             </Routes>
           </main>
         </div>
