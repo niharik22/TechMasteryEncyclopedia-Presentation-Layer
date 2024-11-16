@@ -7,7 +7,7 @@ const encodeCredentials = (username, password) => {
 
 // Create an Axios instance
 const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL, // Use .env for API base URL
+  baseURL: process.env.REACT_APP_API_BASE_URL,
   timeout: 10000, // 10 seconds timeout
   headers: {
     "Content-Type": "application/json",
@@ -17,12 +17,14 @@ const apiClient = axios.create({
 // Request interceptor for Basic Auth and logging
 apiClient.interceptors.request.use(
   (config) => {
-    // Fetch credentials from environment variables
-    const username = process.env.REACT_APP_API_USERNAME;
-    const password = process.env.REACT_APP_API_PASSWORD;
+    // Fetch and trim username and password from environment variables
+    const username = process.env.REACT_APP_API_USERNAME?.trim();
+    const password = process.env.REACT_APP_API_PASSWORD?.trim();
 
     if (username && password) {
       config.headers.Authorization = encodeCredentials(username, password);
+    } else {
+      console.error("Username or password is missing from environment variables.");
     }
 
     // Log the request details
@@ -31,7 +33,6 @@ apiClient.interceptors.request.use(
     return config;
   },
   (error) => {
-    // Log request error
     console.error("Request error:", error);
     return Promise.reject(error);
   }
@@ -40,12 +41,10 @@ apiClient.interceptors.request.use(
 // Response interceptor for global error handling and logging
 apiClient.interceptors.response.use(
   (response) => {
-    // Log the response details
     console.log(`Received response from ${response.config.url}:`, response);
     return response;
   },
   (error) => {
-    // Handle and log errors globally
     console.error(
       "Response error from " +
         (error.response?.config.url || "URL unknown") +
