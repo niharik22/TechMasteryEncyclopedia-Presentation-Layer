@@ -37,7 +37,7 @@ const SideTogglebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState("Welcome");
+  const [selected, setSelected] = useState("Home");
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
@@ -105,7 +105,7 @@ const SideTogglebar = () => {
             gap="15px"
           >
             <Item
-              title="Welcome"
+              title="Home"
               to="/"
               icon={<HomeOutlinedIcon />}
               selected={selected}
@@ -165,13 +165,6 @@ const SideTogglebar = () => {
                 setSelected={setSelected}
               />
             </SubMenu>
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Charts
-            </Typography>
           </Box>
         </Menu>
       </Sidebar>

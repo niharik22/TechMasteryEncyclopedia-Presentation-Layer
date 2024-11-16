@@ -7,7 +7,6 @@ const encodeCredentials = (username, password) => {
 
 // Create an Axios instance
 const apiClient = axios.create({
-  // baseURL: process.env.REACT_APP_API_BASE_URL || "http://localhost:8000",
   baseURL: process.env.REACT_APP_API_BASE_URL,
   timeout: 10000, // 10 seconds timeout
   headers: {

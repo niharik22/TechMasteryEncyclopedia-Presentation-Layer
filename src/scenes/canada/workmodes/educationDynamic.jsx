@@ -50,6 +50,11 @@ const Education = ({ selectedRole, selectedState }) => {
     fetchData();
   }, [selectedRole, selectedState]);
 
+  // Only render the PieChartDynamic if there is data
+  if (!data || data.length === 0) {
+    return null; // Do not render anything if data is empty
+  }
+
   return (
     <Box height="50vh" flex="1" minWidth="48%">
       <PieChartDynamic

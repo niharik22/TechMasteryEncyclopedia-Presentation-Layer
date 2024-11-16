@@ -1,18 +1,59 @@
-import React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import React, { useEffect, useState } from "react";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { fetchRoles } from "../api/dataService"; // Import the fetchRoles function
 
 // Prop `onRoleChange` to allow the parent component to pass a callback function
 export default function Role({ onRoleChange }) {
-  // Set initial state to 'Software Engineer' to select by default
-  const [role, setRole] = React.useState("Software Engineer");
+  const [role, setRole] = useState(""); // Initialize role as an empty string
+  const [roles, setRoles] = useState([]);
+
+  useEffect(() => {
+    // Fetch and cache roles for Canada and the United States on initial load
+    const fetchAndCacheRoles = async () => {
+      const cacheKey = "rolesData";
+      const cachedRoles = sessionStorage.getItem(cacheKey);
+
+      if (cachedRoles) {
+        // Use cached data if available
+        const parsedRoles = JSON.parse(cachedRoles);
+        setRoles(parsedRoles);
+        setRole(parsedRoles[0] || ""); // Set the first role as the default if available
+      } else {
+        try {
+          // Fetch roles for Canada and the United States
+          const [canadaRoles, usaRoles] = await Promise.all([
+            fetchRoles({ country: "Canada", state: "All" }),
+            fetchRoles({ country: "United States", state: "All" }),
+          ]);
+
+          // Combine and set roles
+          const allRoles = [
+            ...(canadaRoles?.roles || []),
+            ...(usaRoles?.roles || []),
+          ];
+
+          // Remove duplicates and set the roles
+          const uniqueRoles = Array.from(new Set(allRoles));
+          setRoles(uniqueRoles);
+          setRole(uniqueRoles[0] || ""); // Set the first role as the default if available
+
+          // Cache the data in sessionStorage
+          sessionStorage.setItem(cacheKey, JSON.stringify(uniqueRoles));
+        } catch (error) {
+          console.error("Failed to fetch roles:", error);
+        }
+      }
+    };
+
+    fetchAndCacheRoles();
+  }, []);
 
   const handleChange = (event) => {
     setRole(event.target.value);
-    // Call the callback function passed by the parent component
-    onRoleChange(event.target.value);
+    onRoleChange(event.target.value); // Call the callback function passed by the parent component
   };
 
   return (
@@ -25,9 +66,11 @@ export default function Role({ onRoleChange }) {
         label="Role"
         onChange={handleChange}
       >
-        <MenuItem value="Software Engineer">Software Engineer</MenuItem>
-        <MenuItem value="Data Analyst">Data Analyst</MenuItem>
-        <MenuItem value="Data Engineer">Data Engineer</MenuItem>
+        {roles.map((roleItem, index) => (
+          <MenuItem key={index} value={roleItem}>
+            {roleItem}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

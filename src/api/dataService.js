@@ -44,3 +44,14 @@ export const fetchCountryDetails = async (requestData) => {
     throw error;
   }
 };
+
+// Fetch roles by sending a JSON payload
+export const fetchRoles = async (requestData) => {
+  try {
+    const response = await apiClient.post(endpoints.getRoles, requestData);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching tech trends:", error);
+    throw error;
+  }
+};

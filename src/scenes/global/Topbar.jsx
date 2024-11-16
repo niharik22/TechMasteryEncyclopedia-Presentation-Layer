@@ -1,11 +1,9 @@
 import { Box, IconButton, Typography, useTheme, Divider } from "@mui/material";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import MenuBookTwoToneIcon from "@mui/icons-material/MenuBookTwoTone";
-import ContactMailTwoToneIcon from "@mui/icons-material/ContactMailTwoTone";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -24,25 +22,17 @@ const Topbar = () => {
         {/* LEFT SIDE: BANNER AND NAVIGATION */}
         <Box display="flex" alignItems="center" gap={4} flex={1}>
           {/* BANNER */}
-          <a href="YOUR_URL_HERE" className="banner-link">
+          <Box component="a" href="/" className="banner-link">
             <MenuBookTwoToneIcon
               sx={{ color: colors.greenAccent[500], marginRight: 1 }}
             />
             <Typography variant="h2" className="banner-text">
               Tech Mastery Encyclopedia
             </Typography>
-          </a>
+          </Box>
 
           {/* NAVIGATION LINKS */}
           <Box className="navigation-links" display="flex" gap={3}>
-            <Typography
-              variant="h4"
-              component="a"
-              href="/dashboard"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              Dashboard
-            </Typography>
             <Typography
               variant="h4"
               component="a"
@@ -64,14 +54,6 @@ const Topbar = () => {
             ) : (
               <LightModeOutlinedIcon />
             )}
-          </IconButton>
-
-          <IconButton
-            component={Link}
-            to="/contact"
-            style={{ color: "inherit" }}
-          >
-            <ContactMailTwoToneIcon />
           </IconButton>
         </Box>
       </Box>

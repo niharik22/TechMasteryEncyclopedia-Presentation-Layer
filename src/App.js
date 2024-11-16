@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Topbar from "./scenes/global/Topbar";
 import SideTogglebar from "./scenes/global/Sidebar";
-
+import Home from "./scenes/home"
 import TechStackUSA from "./scenes/usa/techstack/";
 import WorkModesUSA from "./scenes/usa/workmodes/";
 import TechStackCanada from "./scenes/canada/techstack/";
@@ -24,7 +24,7 @@ function App() {
           <main style={{ flex: 1, overflowY: "auto" }}>
             <Topbar />
             <Routes>
-              {/* <Route path="/" element={<Dashboard />} /> */}
+              <Route path="/" element={<Home/>} />
               <Route path="usa/techstack" element={<TechStackUSA />} />
               <Route path="usa/workmode" element={<WorkModesUSA />} />
               <Route path="usa/map" element={<MapUSA />} />
