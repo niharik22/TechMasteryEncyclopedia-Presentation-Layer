@@ -4,6 +4,9 @@ import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import MenuBookTwoToneIcon from "@mui/icons-material/MenuBookTwoTone";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -30,20 +33,6 @@ const Topbar = () => {
               Tech Mastery Encyclopedia
             </Typography>
           </Box>
-
-          {/* NAVIGATION LINKS */}
-          <Box className="navigation-links" display="flex" gap={3}>
-            <Typography
-              variant="h4"
-              component="a"
-              href="https://github.com/niharik22/TechMasteryEncyclopedia"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              Project Repository
-            </Typography>
-          </Box>
         </Box>
 
         {/* RIGHT SIDE: ICONS */}
@@ -54,6 +43,38 @@ const Topbar = () => {
             ) : (
               <LightModeOutlinedIcon />
             )}
+          </IconButton>
+
+          <IconButton
+            onClick={() =>
+              window.open(
+                "https://niharik22.github.io/Portfolioa/",
+                "_blank"
+              )
+            }
+          >
+            <PersonOutlineIcon />
+          </IconButton>
+
+          <IconButton
+            onClick={() =>
+              window.open(
+                "https://www.linkedin.com/in/niharik-kalpam/",
+                "_blank"
+              )
+            }
+          >
+            <LinkedInIcon />
+          </IconButton>
+          <IconButton
+            onClick={() =>
+              window.open(
+                "https://github.com/niharik22/TechMasteryEncyclopedia",
+                "_blank"
+              )
+            }
+          >
+            <GitHubIcon />
           </IconButton>
         </Box>
       </Box>
