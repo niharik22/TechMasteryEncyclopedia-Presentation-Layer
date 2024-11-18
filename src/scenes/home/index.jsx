@@ -1,65 +1,94 @@
-import React, { useEffect } from "react";
-import { useSpring, animated } from "@react-spring/web";
+import React from "react";
+import { Box, Typography, Button, useTheme } from "@mui/material";
+import { tokens } from "../../theme";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import PieChartIcon from "@mui/icons-material/PieChart";
+import MapIcon from "@mui/icons-material/Map";
+import "./home.css"; // Import the CSS file
 
 const Home = () => {
-  // Animation for the main container (fading in)
-  const containerAnimation = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    config: { duration: 1000 },
-  });
-
-  // Animation for the heading (scaling and fading in)
-  const headingAnimation = useSpring({
-    from: { opacity: 0, transform: "scale(0.8)" },
-    to: { opacity: 1, transform: "scale(1)" },
-    config: { tension: 200, friction: 15 },
-    delay: 300, // Delay to make the heading appear after the container
-  });
-
-  // Animation for the paragraph (sliding up and fading in)
-  const paragraphAnimation = useSpring({
-    from: { opacity: 0, transform: "translateY(20px)" },
-    to: { opacity: 1, transform: "translateY(0)" },
-    config: { duration: 800 },
-    delay: 600, // Delay to make the paragraph appear after the heading
-  });
-
-  // Animation for the button (popping up and fading in)
-  const buttonAnimation = useSpring({
-    from: { opacity: 0, transform: "scale(0.9)" },
-    to: { opacity: 1, transform: "scale(1)" },
-    config: { duration: 500 },
-    delay: 900, // Delay to make the button appear last
-  });
-
-  useEffect(() => {
-    console.log("Home component loaded or reloaded");
-  }, []);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   return (
-    <animated.div style={{ ...containerAnimation, textAlign: "center", marginTop: "20px" }}>
-      <animated.h1 style={{ ...headingAnimation, fontSize: "2.5rem", color: "#4CAF50" }}>
-        Welcome to the Tech Mastery Encyclopedia
-      </animated.h1>
-      <animated.p style={{ ...paragraphAnimation, fontSize: "1.2rem", color: "#B0BEC5", margin: "10px 0" }}>
-        Explore the latest tech trends, work modes, and job insights.
-      </animated.p>
-      <animated.button
-        style={{
-          ...buttonAnimation,
-          padding: "10px 20px",
-          fontSize: "1rem",
+    <Box
+      className="home-container"
+      style={{
+        backgroundColor: colors.primary[400],
+        color: colors.grey[100],
+        paddingTop: "10px",
+        paddingBottom: "10px", 
+      }}
+    >
+      {/* Main Heading */}
+      <Typography
+        variant="h2"
+        className="home-heading"
+        sx={{ marginTop: "10px", marginBottom: "5px" }} 
+      >
+       Stay Ahead in a Rapidly Changing World
+      </Typography>
+
+      {/* Subtext */}
+      <Typography
+        variant="h5"
+        className="home-subtext"
+        sx={{ marginBottom: "15px" }} // Reduced margin to bring the subtext closer
+      >
+        To stay relevant, you need to know the skills that matter. 
+        Discover insights that empower you to grow and seize new opportunities with confidence.
+      </Typography>
+
+      <Button
+        variant="contained"
+        className="home-button"
+        sx={{
+          backgroundColor: colors.greenAccent[400],
           color: "#fff",
-          backgroundColor: "#4CAF50",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
+          "&:hover": {
+            backgroundColor: colors.greenAccent[600],
+          },
+          marginBottom: "30px", // Adjusted margin for better spacing
         }}
       >
-        Learn More
-      </animated.button>
-    </animated.div>
+        Start Learning
+      </Button>
+
+      <Box className="cards-container" sx={{ gap: "15px" }}> {/* Reduced gap between cards */}
+        {/* Card 1 */}
+        <Box className="card" style={{ backgroundColor: colors.primary[400] }}>
+          <BarChartIcon className="icon" style={{ color: colors.greenAccent[400] }} />
+          <Typography variant="h6" className="card-title" sx={{ marginBottom: "5px" }}>
+            Tech Trends
+          </Typography>
+          <Typography variant="body2" className="card-text">
+            Stay updated with the latest technology trends and insights.
+          </Typography>
+        </Box>
+
+        {/* Card 2 - Work Culture */}
+        <Box className="card" style={{ backgroundColor: colors.primary[400] }}>
+          <PieChartIcon className="icon" style={{ color: colors.greenAccent[400] }} />
+          <Typography variant="h6" className="card-title" sx={{ marginBottom: "5px" }}>
+            Work Culture
+          </Typography>
+          <Typography variant="body2" className="card-text">
+            Learn about modern workplace practices and culture.
+          </Typography>
+        </Box>
+
+        {/* Card 3 - Job Market */}
+        <Box className="card" style={{ backgroundColor: colors.primary[400] }}>
+          <MapIcon className="icon" style={{ color: colors.greenAccent[400] }} />
+          <Typography variant="h6" className="card-title" sx={{ marginBottom: "5px" }}>
+            Job Market
+          </Typography>
+          <Typography variant="body2" className="card-text">
+            Navigate the tech job market with confidence.
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
