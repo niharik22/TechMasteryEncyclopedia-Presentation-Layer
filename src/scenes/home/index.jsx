@@ -34,11 +34,11 @@ const Home = () => {
       {/* Hero Section */}
       <div className="hero-content">
         <h1 className="hero-title" style={{ color: colors.grey[100] }}>
-          Stay Ahead in a Rapidly Changing World
+        Master the skills & Shape your future
         </h1>
         <p className="hero-subtitle" style={{ color: colors.grey[200] }}>
-          To stay relevant, you need to know the skills that matter. Discover insights that empower 
-          you to grow and seize new opportunities with confidence.
+        Stay ready for the future. Discover the skills that matter most and gain 
+        the insights to grow and seize new opportunities with confidence.
         </p>
       </div>
 
