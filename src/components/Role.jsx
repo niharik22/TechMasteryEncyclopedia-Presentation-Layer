@@ -25,8 +25,8 @@ export default function Role({ onRoleChange }) {
         try {
           // Fetch roles for Canada and the United States
           const [canadaRoles, usaRoles] = await Promise.all([
-            fetchRoles({ country: "Canada", state: "All" }),
-            fetchRoles({ country: "United States", state: "All" }),
+            fetchRoles({ country: "Canada" }),
+            fetchRoles({ country: "United States" }),
           ]);
 
           // Combine and set roles

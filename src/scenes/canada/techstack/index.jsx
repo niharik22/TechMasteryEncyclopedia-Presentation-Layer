@@ -12,6 +12,7 @@ import { fetchTechTrends } from "../../../api/dataService";
 const TechStackCanada = () => {
   const [role, setRole] = useState("Software Engineer"); // Default role
   const [state, setState] = useState("All"); // Default state
+  const [country] = useState("Canada"); // Default country set to "Canada"
   const [techStackData, setTechStackData] = useState({
     languages: [],
     libraries: [],
@@ -22,7 +23,7 @@ const TechStackCanada = () => {
   // Fetch and transform data with caching logic
   useEffect(() => {
     const fetchData = async () => {
-      const cacheKey = `canada-${role}-${state}`;
+      const cacheKey = `${country.toLowerCase()}-${role}-${state}`;
       const cachedData = sessionStorage.getItem(cacheKey);
 
       if (cachedData) {
@@ -32,7 +33,7 @@ const TechStackCanada = () => {
         // Fetch data from the API if not cached
         try {
           const response = await fetchTechTrends({
-            country: "Canada",
+            country,
             role,
             state,
           });
@@ -86,7 +87,7 @@ const TechStackCanada = () => {
     };
 
     fetchData();
-  }, [role, state]);
+  }, [country, role, state]);
 
   return (
     <Box m="20px" width="98%">
@@ -99,7 +100,7 @@ const TechStackCanada = () => {
         <Header title="Tech Stack in Demand" />
         <Box display="flex" gap="20px">
           <Role onRoleChange={setRole} />
-          <State onStateChange={setState} />
+          <State country={country} onStateChange={setState} />
         </Box>
       </Box>
       <Box

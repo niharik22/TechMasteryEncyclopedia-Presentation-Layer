@@ -12,6 +12,7 @@ import { fetchTechTrends } from "../../../api/dataService";
 const TechStackUSA = () => {
   const [role, setRole] = useState("Software Engineer"); // Default role
   const [state, setState] = useState("All"); // Default state
+  const [country] = useState("United States"); // Default country set to "Canada"
   const [techStackData, setTechStackData] = useState({
     languages: [],
     libraries: [],
@@ -32,7 +33,7 @@ const TechStackUSA = () => {
         try {
           // Fetch the data from the API if not cached
           const response = await fetchTechTrends({
-            country: "United States",
+            country: country,
             role,
             state,
           });
@@ -83,7 +84,7 @@ const TechStackUSA = () => {
     };
 
     fetchData();
-  }, [role, state]);
+  }, [role, state, country]);
 
   return (
     <Box m="20px" width="98%">
@@ -96,7 +97,7 @@ const TechStackUSA = () => {
         <Header title="Tech Stack in Demand" />
         <Box display="flex" gap="20px">
           <Role onRoleChange={setRole} />
-          <State onStateChange={setState} />
+          <State country={country} onStateChange={setState} />
         </Box>
       </Box>
       <Box
