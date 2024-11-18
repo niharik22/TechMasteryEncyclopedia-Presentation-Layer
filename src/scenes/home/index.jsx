@@ -1,94 +1,73 @@
-import React from "react";
-import { Box, Typography, Button, useTheme } from "@mui/material";
+import React from 'react';
+import { BookOpen, Database, Laptop, CodeXmlIcon } from 'lucide-react';
+import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import PieChartIcon from "@mui/icons-material/PieChart";
-import MapIcon from "@mui/icons-material/Map";
-import "./home.css"; // Import the CSS file
+import './home.css';
+
+const AnimatedIcon = ({ Icon, label, delay }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  
+  return (
+    <div 
+      className="animated-icon-container" 
+      style={{ 
+        animationDelay: `${delay}s`,
+        '--icon-color': colors.greenAccent[500],
+        '--bg-color': colors.primary[400]
+      }}
+    >
+      <div className="icon-wrapper">
+        <Icon className="icon" />
+      </div>
+      <span className="icon-label" style={{ color: colors.grey[100] }}>{label}</span>
+    </div>
+  );
+};
 
 const Home = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box
-      className="home-container"
-      style={{
-        backgroundColor: colors.primary[400],
-        color: colors.grey[100],
-        paddingTop: "10px",
-        paddingBottom: "10px", 
-      }}
-    >
-      {/* Main Heading */}
-      <Typography
-        variant="h2"
-        className="home-heading"
-        sx={{ marginTop: "10px", marginBottom: "5px" }} 
-      >
-       Stay Ahead in a Rapidly Changing World
-      </Typography>
+    <div className="home-container" style={{ backgroundColor: colors.primary[400] }}>
+      {/* Hero Section */}
+      <div className="hero-content">
+        <h1 className="hero-title" style={{ color: colors.grey[100] }}>
+          Stay Ahead in a Rapidly Changing World
+        </h1>
+        <p className="hero-subtitle" style={{ color: colors.grey[200] }}>
+          To stay relevant, you need to know the skills that matter. Discover insights that empower 
+          you to grow and seize new opportunities with confidence.
+        </p>
+      </div>
 
-      {/* Subtext */}
-      <Typography
-        variant="h5"
-        className="home-subtext"
-        sx={{ marginBottom: "15px" }} // Reduced margin to bring the subtext closer
-      >
-        To stay relevant, you need to know the skills that matter. 
-        Discover insights that empower you to grow and seize new opportunities with confidence.
-      </Typography>
+      {/* Icons Section */}
+      <div className="icons-container">
+        <AnimatedIcon Icon={CodeXmlIcon} label="Programming Languages" delay={0} />
+        <AnimatedIcon Icon={Database} label="Tools" delay={0.5} />
+        <AnimatedIcon Icon={Laptop} label="Libraries" delay={1} />
+        <AnimatedIcon Icon={BookOpen} label="Skills" delay={1.5} />
+      </div>
 
-      <Button
-        variant="contained"
-        className="home-button"
-        sx={{
-          backgroundColor: colors.greenAccent[400],
-          color: "#fff",
-          "&:hover": {
-            backgroundColor: colors.greenAccent[600],
-          },
-          marginBottom: "30px", // Adjusted margin for better spacing
-        }}
-      >
-        Start Learning
-      </Button>
-
-      <Box className="cards-container" sx={{ gap: "15px" }}> {/* Reduced gap between cards */}
-        {/* Card 1 */}
-        <Box className="card" style={{ backgroundColor: colors.primary[400] }}>
-          <BarChartIcon className="icon" style={{ color: colors.greenAccent[400] }} />
-          <Typography variant="h6" className="card-title" sx={{ marginBottom: "5px" }}>
-            Tech Trends
-          </Typography>
-          <Typography variant="body2" className="card-text">
-            Stay updated with the latest technology trends and insights.
-          </Typography>
-        </Box>
-
-        {/* Card 2 - Work Culture */}
-        <Box className="card" style={{ backgroundColor: colors.primary[400] }}>
-          <PieChartIcon className="icon" style={{ color: colors.greenAccent[400] }} />
-          <Typography variant="h6" className="card-title" sx={{ marginBottom: "5px" }}>
-            Work Culture
-          </Typography>
-          <Typography variant="body2" className="card-text">
-            Learn about modern workplace practices and culture.
-          </Typography>
-        </Box>
-
-        {/* Card 3 - Job Market */}
-        <Box className="card" style={{ backgroundColor: colors.primary[400] }}>
-          <MapIcon className="icon" style={{ color: colors.greenAccent[400] }} />
-          <Typography variant="h6" className="card-title" sx={{ marginBottom: "5px" }}>
-            Job Market
-          </Typography>
-          <Typography variant="body2" className="card-text">
-            Navigate the tech job market with confidence.
-          </Typography>
-        </Box>
-      </Box>
-    </Box>
+      {/* Background Effects */}
+      <div className="background-effects">
+        <div 
+          className="gradient-orb orb-1"
+          style={{ 
+            backgroundColor: `${colors.greenAccent[500]}20`,
+            filter: `blur(${theme.palette.mode === 'dark' ? '120px' : '80px'})`
+          }}
+        />
+        <div 
+          className="gradient-orb orb-2"
+          style={{ 
+            backgroundColor: `${colors.greenAccent[500]}20`,
+            filter: `blur(${theme.palette.mode === 'dark' ? '120px' : '80px'})`
+          }}
+        />
+      </div>
+    </div>
   );
 };
 
