@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# Tech Mastery Encyclopedia
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Master the skills & Shape your future**  
+Stay ready for the future. Discover the skills that matter most and gain the insights to grow and seize new opportunities with confidence. The Tech Mastery Encyclopedia project is dedicated to empowering individuals by identifying in-demand skills through advanced data analysis and machine learning.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+# Presentation Layer
 
-### `npm start`
+The **Presentation Layer** of Tech Mastery Encyclopedia provides an intuitive and visually appealing user interface that simplifies data exploration and skill discovery. This layer effectively communicates the insights generated from the machine learning models and bigram analysis, giving users a seamless experience.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Explore Other Components**:
+- [Visit the Website](https://techmasteryencyclopedia.com/) - Experience the live application.
+- [API Layer](https://github.com/niharik22/TechMasteryEncyclopedia-API-Layer) - Seamless integration of data and models.
+- [Machine Learning Layer](https://github.com/niharik22/TechMasteryEncyclopedia-MachineLearning-Layer) - Advanced data analysis and model implementation.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Key Features
 
-### `npm test`
+### 1. **Dashboard Navigation**
+- The sidebar allows users to navigate between different sections, including:
+  - **Home**: Overview and introduction to the platform.
+  - **United States & Canada Data**: Separate sections for detailed analysis in each country.
+  - **Tech Stack**: Top programming languages, tools, libraries, and skills in demand.
+  - **Workplace & Study**: Insights on work modes, education levels, and preferred study areas.
+  - **Jobs Map**: Visual representation of job distribution across various states or provinces.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. **Visual Data Representation**
+- **Bar Charts**: Display the top programming languages, tools, and skills in demand.
+- **Donut Charts**: Show the distribution of education levels and work modes.
+- **Interactive Map**: Heatmap visualization of job opportunities across regions.
 
-### `npm run build`
+### 3. **Data Filters**
+- Users can filter data based on:
+  - **Roles**: Choose from roles like Data Analyst, Data Engineer, or Software Engineer.
+  - **States/Provinces**: Select specific states or provinces for a more granular view.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+For a complete visual walkthrough, visit the live site: [Tech Mastery Encyclopedia](https://techmasteryencyclopedia.com/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+*Note: This document provides a high-level overview of the Presentation Layer. For frontend implementation details, refer to the GitHub repository.*
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
