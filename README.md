@@ -15,6 +15,11 @@ The **Presentation Layer** of Tech Mastery Encyclopedia provides an intuitive an
 - [Machine Learning Layer](https://github.com/niharik22/TechMasteryEncyclopedia-MachineLearning-Layer) - Advanced data analysis and model implementation.
 ---
 
+## Deployment Details
+
+The **Presentation Layer** has been deployed using **Netlify**, with a **CI/CD pipeline** set up to ensure continuous deployment. The pipeline is connected to the GitHub repository, automatically deploying updates whenever changes are pushed to the main branch. This setup provides a streamlined workflow for maintaining and updating the user interface.
+
+---
 ## Key Features
 
 ### 1. **Dashboard Navigation**
