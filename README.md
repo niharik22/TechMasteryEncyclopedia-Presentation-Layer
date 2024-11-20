@@ -20,6 +20,14 @@ The **Presentation Layer** of Tech Mastery Encyclopedia provides an intuitive an
 The **Presentation Layer** has been deployed using **Netlify**, with a **CI/CD pipeline** set up to ensure continuous deployment. The pipeline is connected to the GitHub repository, automatically deploying updates whenever changes are pushed to the main branch. This setup provides a streamlined workflow for maintaining and updating the user interface.
 
 ---
+
+## Table of Contents
+
+1. [Dashboard Navigation](#1-dashboard-navigation)
+2. [Visual Data Representation](#2-visual-data-representation)
+3. [Data Filters](#3-data-filters)
+4. [Live Walkthrough](#for-a-complete-visual-walkthrough-visit-the-live-site)
+---
 ## Key Features
 
 ### 1. **Dashboard Navigation**
